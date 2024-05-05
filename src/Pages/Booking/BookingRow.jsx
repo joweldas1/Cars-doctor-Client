@@ -1,4 +1,3 @@
-import { space } from 'postcss/lib/list';
 import React from 'react';
 
 const BookingRow = ({data , handleDelete,handleUpdate}) => {

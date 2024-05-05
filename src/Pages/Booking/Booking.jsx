@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from "react";
 import UseAuth from "../Provider/UseAuth";
 import BookingRow from "./BookingRow";
+import axios from "axios";
 
 const Booking = () => {
   const [bookingData, setBooking] = useState([]);
   const { user } = UseAuth();
-
-  const url = `http://localhost:5000/booking?email=${user?.email}`;
-
+  const urlCom=user?.email
+  const url = `https://cars-doctor-server-eta.vercel.app/booking?email=${urlCom}`;
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setBooking(data));
+    axios.get(url,{withCredentials:true})
+    .then(res=>{
+      console.log(res);
+      setBooking(res.data)
+    })
+
   }, []);
 
+  
   const handleDelete = (id) => {
     const isDelete = confirm("Are you sure want to delete?");
     if (isDelete) {
-      fetch(`http://localhost:5000/booking/${id}`, {
+      fetch(`https://cars-doctor-server-eta.vercel.app/booking/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -36,7 +40,7 @@ const Booking = () => {
   const handleUpdate=id=>{
     const isUpdate=confirm("Are are sure?")
     if(isUpdate){
-        fetch(`http://localhost:5000/booking/${id}`,{
+        fetch(`https://cars-doctor-server-eta.vercel.app/booking/${id}`,{
             method:"PATCH",
             headers:{"content-type":"application/json"},
             body:JSON.stringify({status:"confirm"})

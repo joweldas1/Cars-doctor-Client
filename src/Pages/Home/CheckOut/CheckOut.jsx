@@ -28,7 +28,7 @@ const handleOnSubmit=(e)=>{
 
     }
 
-    fetch('http://localhost:5000/booking',{
+    fetch('https://cars-doctor-server-eta.vercel.app/booking',{
             method:"POST",
             headers:{"content-type":"application/JSON"},
             body:JSON.stringify(booking)

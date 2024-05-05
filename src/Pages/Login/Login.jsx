@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import loginImg from "../../../public/assets/images/login/login.svg";
 import UseAuth from "../Provider/UseAuth";
+import axios from "axios";
 
 const Login = () => {
+  const location=useLocation()
+  const navigate=useNavigate()
   const {signIn}=UseAuth()
   const handleLogin = (e) => {
     e.preventDefault();
@@ -11,7 +14,36 @@ const Login = () => {
     const password=form.password.value;
 
     signIn(email,password)
-    .then((result)=>console.log(result.user))
+    .then((result)=>{
+      if(result.user){
+        // const loggedUser=result.
+        const user={email};
+        
+        axios.post('https://cars-doctor-server-eta.vercel.app/jwt',user, {withCredentials:true})
+        .then(res=> {
+          console.log(res);
+          if(res.status===200){
+            // 
+          }
+        })
+
+
+
+
+
+
+        // const user={email}
+        // axios.post('https://cars-doctor-server-eta.vercel.app/jwt',user,{withCredentials:true})
+        // .then(res=> {
+        //   console.log(res.data)
+        // })
+        // console.log(user);
+        // console.log(loggedUser);
+
+        // console.log(location);
+        // return navigate(location?.state || "/")
+      }
+    })
     .catch((error)=>console.log(error))
 
     
@@ -19,7 +51,7 @@ const Login = () => {
   return (
     <div>
       <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content md:gap-16  flex-col lg:flex-row">
+        <div className="hero-content md:gap-16  flex-col md:flex-row">
           <div className="w-full md:w-1/2">
             <img src={loginImg} alt="" />
           </div>

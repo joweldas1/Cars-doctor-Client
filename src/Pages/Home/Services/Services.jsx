@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
+import axios from "axios";
 
 const Services = () => {
     const [services, setServices]=useState([])
@@ -7,9 +8,8 @@ const Services = () => {
     
 
     useEffect(()=>{
-        fetch('http://localhost:5000/services')
-        .then(res=>res.json())
-        .then(data=>setServices(data))
+      axios.get(`https://cars-doctor-server-eta.vercel.app/services`,{withCredentials:true})
+        .then(res=>setServices(res.data))
     },[])
 
     
